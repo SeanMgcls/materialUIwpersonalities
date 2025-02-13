@@ -8,6 +8,11 @@ import { Typography, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
 
 export default function Gallery() {
   const [index, setIndex] = useState(0);
@@ -32,7 +37,50 @@ export default function Gallery() {
     }
   }
 
+      // Radio Button Component
+    function RadioButtonsGroup({ index, onChange }) {
+      return (
+        <FormControl>
+          <FormLabel>Select an artist</FormLabel>
+          <RadioGroup value={sculptureList[index].artist} onChange={onChange}>
+            {sculptureList.map((sculpture, i) => (
+              <FormControlLabel
+                key={i}
+                value={sculpture.artist}
+                control={<Radio />}
+                label={sculpture.artist}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      );
+    }
+
+  
+    
+
+    interface ExpandMoreProps extends IconButtonProps {
+      expand: boolean;
+    }
+
+      const ExpandMore = styled(IconButton, {
+        shouldForwardProp: (prop) => prop !== 'expand', // 
+      })(({ theme, expand }: { theme: any; expand: boolean }) => ({
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+          duration: theme.transitions.duration.shortest,
+        }),
+        transform: expand ? 'rotate(180deg)' : 'rotate(0deg)', 
+      }));
+
+
+
   const sculpture = sculptureList[index];
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <Container maxWidth="sm">
@@ -90,35 +138,27 @@ export default function Gallery() {
         >
           {showMore ? 'Hide' : 'Show'} details
         </Button>
+        
+        <Card variant="outlined">
+          <CardContent>
+            {showMore && <Typography variant="body1">{sculpture.description}</Typography>}
+            <div className="container">
+              <img src={sculpture.url} alt={sculpture.alt} style={{ width: '100%', height: 'auto' }} />
+            </div>
 
-        {showMore && <Typography variant="body1">{sculpture.description}</Typography>}
+            {/* Radio Buttons for Selecting an Artist */}
+            <RadioButtonsGroup index={index} onChange={handleRadioChange} />
+          </CardContent>
+        </Card>
+        <ExpandMore expand={expanded} onClick={handleExpandClick}>
+          <ExpandMoreIcon />
+        </ExpandMore>
 
-        <div className="container">
-          <img src={sculpture.url} alt={sculpture.alt} style={{ width: '100%', height: 'auto' }} />
-        </div>
+      
+      {expanded && <Typography variant="body1">{sculpture.description}</Typography>}
 
-        {/* Radio Buttons for Selecting an Artist */}
-        <RadioButtonsGroup index={index} onChange={handleRadioChange} />
       </Box>
     </Container>
   );
 }
 
-// Radio Button Component
-function RadioButtonsGroup({ index, onChange }) {
-  return (
-    <FormControl>
-      <FormLabel>Select an artist</FormLabel>
-      <RadioGroup value={sculptureList[index].artist} onChange={onChange}>
-        {sculptureList.map((sculpture, i) => (
-          <FormControlLabel
-            key={i}
-            value={sculpture.artist}
-            control={<Radio />}
-            label={sculpture.artist}
-          />
-        ))}
-      </RadioGroup>
-    </FormControl>
-  );
-}
