@@ -47,11 +47,10 @@ ul {
 }
 
 
-
 button {
   padding: 10px 20px; /* Add padding to buttons */
   font-size: 16px; /* Adjust text size */
-  background-color: #5f98d4; /* Blue background */
+  background-color: #2dfc6b; /* Blue background */
   color: white; /* White text */
   border: 2px solid #002e5f; /* Blue border */
   border-radius: 5px; /* Rounded corners */

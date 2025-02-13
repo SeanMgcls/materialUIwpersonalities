@@ -13,6 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
+import { blue } from '@mui/material/colors';
 
 export default function Gallery() {
   const [index, setIndex] = useState(0);
@@ -84,7 +85,7 @@ export default function Gallery() {
 
   return (
     <Container maxWidth="sm">
-      <Box component="section" sx={{ p: 2, border: '2px solid grey' }}>
+      <Box component="section" sx={{ p: 2, border: '2px solid grey', backgroundColor: 'bisque' }}>
         <Typography variant="h2" component="h2">
           Sean Glenn Magcalas
         </Typography>
@@ -97,6 +98,7 @@ export default function Gallery() {
               color="primary"
               startIcon={<ArrowBackIosNewIcon />}
               disabled={index === 0}
+              sx={{backgroundColor: 'white'}}
             >
               <Typography variant="h6" component="h6">
                 BACK
@@ -109,6 +111,7 @@ export default function Gallery() {
               color="primary"
               startIcon={<ArrowForwardIosIcon />}
               disabled={index === sculptureList.length - 1}
+              sx={{backgroundColor: 'white'}}
             >
               <Typography variant="h6" component="h6">
                 NEXT
@@ -139,7 +142,7 @@ export default function Gallery() {
           {showMore ? 'Hide' : 'Show'} details
         </Button>
         
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{backgroundColor:'burlywood'}}>
           <CardContent>
             {showMore && <Typography variant="body1">{sculpture.description}</Typography>}
             <div className="container">
